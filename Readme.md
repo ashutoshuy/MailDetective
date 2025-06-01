@@ -190,4 +190,222 @@ graph TD
 | Status | Description | Example Reason |
 |--------|-------------|----------------|
 | ✅ **Can Receive Emails** | All validation checks passed | SMTP port accessible |
-| ❌ **
+| ❌ **No Mail Servers** | Domain exists but no MX records | No mail servers configured |
+| ❌ **Domain Not Found** | DNS resolution failed | Domain doesn't exist |
+| ❌ **Server Offline** | SMTP connection failed | Mail server not accessible |
+| ❌ **Invalid Format** | Syntax validation failed | Invalid domain syntax |
+| ⚠️ **Timeout** | Processing exceeded limits | Connection timeout |
+
+---
+
+## ⚠️ Important Limitations
+
+### 🚨 SMTP Port Restrictions
+
+> **CRITICAL WARNING**: This tool requires access to SMTP port 25, which is blocked on many cloud platforms.
+
+#### ❌ **Blocked Environments**
+| Platform | Restriction | Solution |
+|----------|-------------|----------|
+| **AWS EC2** | Port 25 blocked by default | Use dedicated servers or email APIs |
+| **Google Cloud** | SMTP restrictions on GCE | Request port 25 access or use alternatives |
+| **Microsoft Azure** | Limited SMTP access | Use VMs with SMTP support |
+| **Corporate Networks** | Firewall restrictions | Contact network administrator |
+
+#### ✅ **Recommended Environments**
+- 🖥️ **Local Development**: Full functionality
+- 🔧 **VPS/Dedicated Servers**: Usually unrestricted
+- 🌐 **SMTP-friendly Hosts**: DigitalOcean, Vultr, Linode
+- 🔒 **Private Networks**: With proper firewall configuration
+
+### 🔄 Alternative Solutions
+For restricted environments, consider:
+- **Email Validation APIs**: ZeroBounce, Hunter.io, NeverBounce
+- **Proxy Solutions**: VPN or proxy servers with SMTP access
+- **Hybrid Approach**: Combine DNS validation with API services
+
+---
+
+## 🔮 Future Roadmap
+
+<details>
+<summary>🚀 <strong>Phase 1: Enhanced Validation (Q2 2024)</strong></summary>
+
+### 📧 Advanced Email Features
+- [ ] **Email Address Validation**: Verify specific addresses vs domains
+- [ ] **Catch-all Detection**: Identify domains accepting all emails
+- [ ] **Disposable Email Detection**: Flag temporary services
+- [ ] **Role Account Detection**: Identify generic accounts (admin@, info@)
+- [ ] **SMTP Conversation**: Deep mailbox verification
+
+### 🔒 Security & Authentication
+- [ ] **DKIM/SPF Validation**: Email authentication record checks
+- [ ] **DMARC Policy Analysis**: Email security policy validation
+- [ ] **SSL/TLS Testing**: Secure transmission capability verification
+
+</details>
+
+<details>
+<summary>⚡ <strong>Phase 2: Performance & Scale (Q3 2024)</strong></summary>
+
+### 🏗️ Infrastructure
+- [ ] **Database Integration**: PostgreSQL/MongoDB for result storage
+- [ ] **Distributed Processing**: Multi-server architecture
+- [ ] **API Endpoints**: RESTful API for programmatic access
+- [ ] **Rate Limiting**: Intelligent throttling system
+- [ ] **Caching Layer**: Redis for improved performance
+
+### 📊 Analytics & Monitoring
+- [ ] **Real-time Metrics**: Grafana/Prometheus integration
+- [ ] **Performance Tracking**: Historical processing analytics
+- [ ] **Error Analysis**: Automated failure pattern detection
+
+</details>
+
+<details>
+<summary>🎨 <strong>Phase 3: User Experience (Q4 2024)</strong></summary>
+
+### 🖥️ Interface Enhancements
+- [ ] **Dashboard Analytics**: Visual charts and trends
+- [ ] **Advanced Filtering**: Multi-criteria result filtering
+- [ ] **Scheduled Validation**: Automated periodic checks
+- [ ] **Email Notifications**: Completion alerts and reports
+- [ ] **Mobile Optimization**: Responsive design improvements
+
+### 📁 Import/Export
+- [ ] **CSV/Excel Support**: Multiple file format handling
+- [ ] **Custom Templates**: Configurable export formats
+- [ ] **Integration Hooks**: Webhook support for external systems
+
+</details>
+
+<details>
+<summary>🏢 <strong>Phase 4: Enterprise Features (2025)</strong></summary>
+
+### 👥 Multi-tenant Support
+- [ ] **User Authentication**: Role-based access control
+- [ ] **Team Management**: Organization and permission system
+- [ ] **Audit Logging**: Comprehensive activity tracking
+- [ ] **White-label Solutions**: Custom branding options
+
+### 🔗 Integrations
+- [ ] **CRM Integration**: Salesforce, HubSpot connectivity
+- [ ] **Marketing Platforms**: Mailchimp, Constant Contact sync
+- [ ] **Cloud Storage**: AWS S3, Google Drive integration
+- [ ] **Notification Systems**: Slack, Teams, Discord webhooks
+
+</details>
+
+---
+
+## 🛠️ Development & Contribution
+
+### 🤝 Contributing
+We welcome contributions! Priority areas:
+- 🔧 **Performance Optimizations**
+- 🧪 **Additional Validation Methods**
+- 🎨 **UI/UX Enhancements**
+- 📚 **Documentation Improvements**
+- 🌐 **Cross-platform Compatibility**
+
+### 📝 Development Setup
+```bash
+# Clone repository
+git clone [repository-url]
+cd domain-email-validator
+
+# Create virtual environment
+python3 -m venv venv
+source venv/bin/activate  # Linux/Mac
+# venv\Scripts\activate    # Windows
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run in development mode
+python domain_validator.py
+```
+
+---
+
+## 🆘 Troubleshooting
+
+<details>
+<summary>❓ <strong>Common Issues & Solutions</strong></summary>
+
+### 🐛 Installation Issues
+```bash
+# Issue: "dnspython library not found"
+pip3 install dnspython
+
+# Issue: "Permission denied on port 3000"
+sudo python3 domain_validator.py
+# Or use different port: python3 domain_validator.py --port 8080
+```
+
+### 🌐 Network Issues
+```bash
+# Issue: "SMTP connections failing"
+# Check SMTP port access
+telnet smtp.gmail.com 25
+
+# Test DNS resolution
+nslookup google.com
+
+# Verify Python DNS
+python3 -c "import dns.resolver; print('DNS working')"
+```
+
+### 📊 Performance Issues
+| Problem | Solution |
+|---------|----------|
+| Slow processing | Reduce worker count in code |
+| Memory usage high | Process smaller batches |
+| Timeout errors | Increase timeout values |
+| Rate limiting | Add delays between requests |
+
+</details>
+
+### 🔍 Debugging Tips
+- 📝 Check console output for detailed error messages
+- 🌐 Verify network connectivity and DNS resolution  
+- ✅ Test with known good domains (google.com, github.com)
+- 🔧 Enable debug mode: `app.run(debug=True)`
+
+---
+
+## 📄 License & Legal
+
+### 📜 License
+This project is released under **Open Source License**. Free to use, modify, and distribute.
+
+### ⚖️ Disclaimer
+- This tool is for legitimate email validation purposes only
+- Respect rate limits and terms of service of target domains
+- Use responsibly and in compliance with applicable laws
+- No warranty provided - use at your own risk
+
+### 🤝 Attribution
+If you use this tool in your project, attribution is appreciated but not required.
+
+---
+
+<div align="center">
+
+## 🌟 Support This Project
+
+⭐ **Star this repository** if you find it useful!
+
+🐛 **Report issues** to help improve the tool
+
+🤝 **Contribute** to make it even better
+
+📢 **Share** with others who might benefit
+
+---
+
+**Built with ❤️ for the developer community**
+
+[🔝 Back to Top](#-domain-email-validator)
+
+</div>
